@@ -1,0 +1,19 @@
+1
+00:00:01,500 --> 00:00:05,200
+Ladies and gentlemen, the time is 10 o'clock at night.
+
+2
+00:00:05,400 --> 00:00:09,600
+Polling has ended across the country and counting has begun.
+
+3
+00:00:09,800 --> 00:00:16,200
+Yes indeed Tariq, ballot boxes from all constituencies have been sealed and the counting process has officially begun.
+
+4
+00:00:16,500 --> 00:00:21,500
+According to the Election Commission, the final results will be announced at 6 AM sharp.
+
+5
+00:00:21,800 --> 00:00:26,600
+Stay with us until 6 AM for moment-by-moment updates on the results.

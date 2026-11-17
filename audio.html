@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NA-47 CLASSIFIED ARCHIVE // AUDIO &amp; DIALOGUE VAULT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a09;
+      --card-bg: #0c1411;
+      --border: #1a3328;
+      --border-bright: #2d5a47;
+      --green: #4ade80;
+      --green-glow: rgba(74, 222, 128, 0.35);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.35);
+      --red: #ef4444;
+      --cyan: #38bdf8;
+      --khaki: #d97706;
+      --babu: #06b6d4;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* CRT Scanlines Overlay */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.32) 50%);
+      background-size: 100% 4px;
+      z-index: 999;
+      opacity: 0.5;
+    }
+
+    /* Header */
+    header {
+      background: rgba(12, 20, 17, 0.95);
+      border-bottom: 2px solid var(--border-bright);
+      padding: 14px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-logo {
+      font-size: 26px;
+    }
+    .header-title-box h1 {
+      font-size: 19px;
+      letter-spacing: 2px;
+      color: var(--green);
+      text-shadow: 0 0 10px var(--green-glow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-title-box p {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+    .badge-classified {
+      background: #dc2626;
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      letter-spacing: 1.5px;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-btn {
+      background: #112019;
+      color: var(--green);
+      border: 1px solid var(--border-bright);
+      padding: 7px 14px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: #19382b;
+      border-color: var(--green);
+      box-shadow: 0 0 12px var(--green-glow);
+    }
+    .nav-btn.btn-play {
+      background: #166534;
+      color: #fff;
+      border-color: #22c55e;
+      font-weight: bold;
+    }
+    .nav-btn.btn-play:hover {
+      background: #15803d;
+    }
+
+    /* Master Console Bar */
+    .master-console {
+      background: #09120e;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .visualizer-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 280px;
+    }
+    #visualizer-canvas {
+      width: 100%;
+      max-width: 440px;
+      height: 48px;
+      background: #040806;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .master-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .vol-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #0d1a15;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .vol-control label {
+      font-size: 12px;
+      color: var(--green);
+    }
+    input[type="range"] {
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+    .btn-panic {
+      background: #7f1d1d;
+      color: #fecaca;
+      border: 1px solid #dc2626;
+      padding: 7px 14px;
+      font-family: inherit;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-panic:hover {
+      background: #b91c1c;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    }
+
+    /* Search & Filter Toolbar */
+    .toolbar {
+      padding: 16px 28px;
+      background: #080f0c;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      max-width: 460px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      background: #060b09;
+      border: 1px solid var(--border-bright);
+      color: #fff;
+      padding: 9px 14px 9px 36px;
+      font-family: inherit;
+      font-size: 13px;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 8px var(--green-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    .category-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill {
+      background: #0f1c16;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pill:hover {
+      border-color: var(--border-bright);
+      color: #fff;
+    }
+    .pill.active {
+      background: var(--green);
+      color: #05140b;
+      border-color: var(--green);
+      font-weight: bold;
+      box-shadow: 0 0 10px var(--green-glow);
+    }
+    .pill-count {
+      font-size: 10px;
+      opacity: 0.8;
+      margin-left: 4px;
+    }
+
+    /* Main Grid Area */
+    main {
+      flex: 1;
+      padding: 24px 28px 48px;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .status-summary {
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 18px;
+    }
+
+    /* Audio Card */
+    .audio-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+    .audio-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+    .audio-card.playing {
+      border-color: var(--green);
+      box-shadow: 0 0 16px var(--green-glow);
+      background: #0f1c15;
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .card-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .card-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tag-speaker {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .speaker-khaki { background: rgba(217, 119, 6, 0.25); color: #f59e0b; border: 1px solid #b45309; }
+    .speaker-babu { background: rgba(6, 182, 212, 0.25); color: #38bdf8; border: 1px solid #0284c7; }
+    .speaker-radio { background: rgba(168, 85, 247, 0.25); color: #c084fc; border: 1px solid #7e22ce; }
+    .speaker-office { background: rgba(34, 197, 94, 0.25); color: #4ade80; border: 1px solid #15803d; }
+    .speaker-sabotage { background: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid #b91c1c; }
+    .speaker-atmosphere { background: rgba(100, 116, 139, 0.25); color: #cbd5e1; border: 1px solid #475569; }
+
+    .tag-type {
+      font-size: 10px;
+      color: var(--text-dim);
+      background: #08100c;
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid #14281f;
+    }
+
+    /* Dialogue Transcript Box */
+    .dialogue-box {
+      background: #060b09;
+      border-left: 3px solid var(--green);
+      padding: 10px 12px;
+      border-radius: 0 4px 4px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12.5px;
+    }
+    .dialogue-box.khaki-border { border-left-color: var(--khaki); }
+    .dialogue-box.babu-border { border-left-color: var(--babu); }
+    .dialogue-box.sabotage-border { border-left-color: var(--red); }
+    .urdu-text {
+      color: #fef08a;
+      line-height: 1.4;
+      font-size: 13.5px;
+    }
+    .english-text {
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.35;
+      font-size: 11.5px;
+    }
+    .context-note {
+      font-size: 10.5px;
+      color: #6ee7b7;
+      opacity: 0.85;
+      margin-top: 2px;
+      border-top: 1px dashed #1a3328;
+      padding-top: 4px;
+    }
+
+    /* Audio Controls Section */
+    .card-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+      border-top: 1px solid #12221b;
+      padding-top: 12px;
+    }
+    .btn-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-play-sound {
+      flex: 1;
+      background: #143022;
+      border: 1px solid var(--green);
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-play-sound:hover {
+      background: var(--green);
+      color: #05140b;
+      font-weight: bold;
+      box-shadow: 0 0 12px var(--green-glow);
+    }
+    .btn-play-sound.active {
+      background: #dc2626;
+      border-color: #ef4444;
+      color: #fff;
+    }
+    .btn-stop-sound {
+      background: #1b1c1e;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-family: inherit;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-stop-sound:hover {
+      background: #334155;
+      color: #fff;
+    }
+    .btn-loop {
+      background: #0e1c15;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: inherit;
+      font-size: 11px;
+      padding: 8px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-loop.active {
+      background: var(--amber);
+      color: #000;
+      border-color: var(--amber);
+      font-weight: bold;
+    }
+
+    .sliders-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .slider-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .slider-item input {
+      flex: 1;
+      height: 4px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 16px 28px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      background: #070e0b;
+    }
+
+    @media (max-width: 768px) {
+      header, .master-console, .toolbar, main {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+.game-icon { display:inline-block; width:1.15em; height:1.15em; vertical-align:-0.18em; margin-right:0.35em; fill:currentColor; flex-shrink:0; }
+.game-icon-stroke { display:inline-block; width:1.15em; height:1.15em; vertical-align:-0.18em; margin-right:0.35em; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+
+</style>
+</head>
+<body>
+  <div class="scanlines"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-branding">
+      <div class="header-logo"><svg class="game-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="header-title-box">
+        <h1>
+          NA-47 AUDIO &amp; DIALOGUE VAULT
+          <span class="badge-classified">SURVEILLANCE ARCHIVE</span>
+        </h1>
+        <p>Interactive Audio Review &amp; Voice Line Inspector · Govt. Boys High School NA-47</p>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn btn-play">▶ RETURN TO GAME</a>
+      <a href="inspector.html" class="nav-btn">3D CHARACTER INSPECTOR</a>
+    </div>
+  </header>
+
+  <!-- Master Console Bar -->
+  <div class="master-console">
+    <div class="visualizer-wrap">
+      <canvas id="visualizer-canvas"></canvas>
+      <div style="font-size:11px;color:var(--green)">
+        AUDIO ENGINE: <b id="engine-status">INITIALIZING</b><br>
+        <span style="color:var(--text-dim)">Real-time WebAudio Spectrum</span>
+      </div>
+    </div>
+    <div class="master-controls">
+      <div class="vol-control">
+        <label for="master-vol">MASTER VOL</label>
+        <input type="range" id="master-vol" min="0" max="100" value="100">
+        <span id="master-vol-val" style="font-size:12px;color:#fff;min-width:34px">100%</span>
+      </div>
+      <button class="btn-panic" id="btn-stop-all" type="button">
+        <svg class="game-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg> STOP ALL SOUNDS
+      </button>
+    </div>
+  </div>
+
+  <!-- Search & Filter Toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <span class="search-icon"><svg class="game-icon-stroke" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input type="text" id="search-input" class="search-input" placeholder="Search sounds, Urdu lines, translations, keywords (e.g. kundi, whitener, alarm)...">
+    </div>
+    <div class="category-pills">
+      <button class="pill active" data-cat="all">ALL SOUNDS <span class="pill-count" id="count-all">0</span></button>
+      <button class="pill" data-cat="radio"><svg class="game-icon" viewBox="0 0 24 24"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.4-1.1-.6-2.3-.6-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg> PHONE CALLS <span class="pill-count" id="count-radio">0</span></button>
+      <button class="pill" data-cat="khaki">KHAKI (DOOR) <span class="pill-count" id="count-khaki">0</span></button>
+      <button class="pill" data-cat="babu"><svg class="game-icon-stroke" viewBox="0 0 24 24"><circle cx="6" cy="14" r="4"/><circle cx="18" cy="14" r="4"/><path d="M10 14h4"/><path d="M2 14L4 6"/><path d="M22 14l-2-8"/></svg> BABU (WINDOW) <span class="pill-count" id="count-babu">0</span></button>
+      <button class="pill" data-cat="office"><svg class="game-icon-stroke" viewBox="0 0 24 24"><path d="M3 21h18M5 21V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v18"/><circle cx="15" cy="12" r="1" fill="currentColor"/></svg> OFFICE &amp; SFX <span class="pill-count" id="count-office">0</span></button>
+      <button class="pill" data-cat="sabotage"><svg class="game-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> SABOTAGE <span class="pill-count" id="count-sabotage">0</span></button>
+      <button class="pill" data-cat="atmosphere"><svg class="game-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ATMOSPHERE <span class="pill-count" id="count-atmosphere">0</span></button>
+    </div>
+  </div>
+
+  <!-- Main Grid Area -->
+  <main>
+    <div class="status-summary">
+      <span id="showing-count">Loading audio catalog...</span>
+      <span>Tip: Adjust <b>PAN</b> to test Left/Right 3D binaural directional audio in headphones</span>
+    </div>
+    <div class="cards-grid" id="cards-grid">
+      <!-- Dynamically generated audio cards -->
+    </div>
+  </main>
+
+  <footer>
+    NA-47 ELECTION DEFENSE ARCHIVE · ALL AUDIO RIGHTS RESERVED · ELECTIONS ACT 2017 COMPLIANT
+  </footer>
+
+  <!-- Scripts -->
+  <script src="audio.js?v=20261027_01"></script>
+  <script src="audio_catalog.js?v=20261027_01"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let activeCategory = 'all';
+      let searchQuery = '';
+      const activeLoops = {};
+      const activeSources = {};
+
+      const engineStatus = document.getElementById('engine-status');
+      const cardsGrid = document.getElementById('cards-grid');
+      const showingCount = document.getElementById('showing-count');
+      const searchInput = document.getElementById('search-input');
+      const masterVolSlider = document.getElementById('master-vol');
+      const masterVolVal = document.getElementById('master-vol-val');
+      const btnStopAll = document.getElementById('btn-stop-all');
+      const categoryPills = document.querySelectorAll('.category-pills .pill');
+
+      // Visualizer setup
+      const canvas = document.getElementById('visualizer-canvas');
+      const ctx2d = canvas.getContext('2d');
+      let analyserNode = null;
+
+      function setupVisualizer() {
+        if (!window.GameAudio || !window.GameAudio.ctx) return;
+        try {
+          if (!analyserNode) {
+            analyserNode = window.GameAudio.ctx.createAnalyser();
+            analyserNode.fftSize = 64;
+            const masterNode = window.GameAudio.getMasterNode();
+            if (masterNode) {
+              masterNode.connect(analyserNode);
+            }
+          }
+        } catch (_) {}
+      }
+
+      function renderVisualizer() {
+        requestAnimationFrame(renderVisualizer);
+        if (!canvas || !ctx2d) return;
+
+        const w = canvas.width = canvas.clientWidth;
+        const h = canvas.height = canvas.clientHeight;
+        ctx2d.fillStyle = '#040806';
+        ctx2d.fillRect(0, 0, w, h);
+
+        if (!analyserNode) {
+          ctx2d.fillStyle = '#102419';
+          ctx2d.fillRect(0, h / 2 - 1, w, 2);
+          return;
+        }
+
+        const bufferLength = analyserNode.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        analyserNode.getByteFrequencyData(dataArray);
+
+        const barWidth = (w / bufferLength) * 0.85;
+        let x = 2;
+        for (let i = 0; i < bufferLength; i++) {
+          const barHeight = (dataArray[i] / 255) * (h - 4);
+          ctx2d.fillStyle = '#4ade80';
+          ctx2d.fillRect(x, h - barHeight - 2, barWidth, barHeight);
+          x += barWidth + 2;
+        }
+      }
+      renderVisualizer();
+
+      function updateCategoryCounts() {
+        const catalog = window.GAME_AUDIO_CATALOG || [];
+        const counts = { all: catalog.length, radio: 0, khaki: 0, babu: 0, office: 0, sabotage: 0, atmosphere: 0 };
+        catalog.forEach(item => {
+          if (counts[item.category] !== undefined) counts[item.category]++;
+        });
+        Object.entries(counts).forEach(([cat, cnt]) => {
+          const el = document.getElementById(`count-${cat}`);
+          if (el) el.textContent = cnt;
+        });
+      }
+
+      function stopItemSound(item) {
+        if (activeLoops[item.id]) {
+          clearInterval(activeLoops[item.id]);
+          delete activeLoops[item.id];
+        }
+        if (typeof item.stopAction === 'function') {
+          item.stopAction(window.GameAudio);
+        }
+        if (activeSources[item.id]) {
+          try {
+            if (activeSources[item.id].stop) activeSources[item.id].stop();
+            if (activeSources[item.id].pause) activeSources[item.id].pause();
+          } catch (_) {}
+          delete activeSources[item.id];
+        }
+        if (window.speechSynthesis && window.speechSynthesis.speaking) {
+          window.speechSynthesis.cancel();
+        }
+        const card = document.getElementById(`card-${item.id}`);
+        if (card) {
+          card.classList.remove('playing');
+          const btn = card.querySelector('.btn-play-sound');
+          if (btn) {
+            btn.innerHTML = '▶ PLAY SOUND';
+            btn.classList.remove('active');
+          }
+        }
+      }
+
+      function playItemSound(item, pan = 0, vol = 1.0, isLoop = false) {
+        if (!window.GameAudio) return;
+        window.GameAudio.init();
+        setupVisualizer();
+
+        const card = document.getElementById(`card-${item.id}`);
+        if (card) card.classList.add('playing');
+
+        const trigger = () => {
+          try {
+            if (typeof item.action === 'function') {
+              const res = item.action(window.GameAudio, { pan, vol });
+              if (res) activeSources[item.id] = res;
+            }
+          } catch (e) {
+            console.error('Play sound error:', e);
+          }
+        };
+
+        trigger();
+
+        if (isLoop) {
+          const loopInterval = (item.id === 'scanner_loop' || item.id === 'emergency_alarm' || item.id === 'room_ambience') ? 2000 : 3500;
+          activeLoops[item.id] = setInterval(trigger, loopInterval);
+        } else {
+          setTimeout(() => {
+            if (!activeLoops[item.id] && card) {
+              card.classList.remove('playing');
+              const btn = card.querySelector('.btn-play-sound');
+              if (btn) {
+                btn.innerHTML = '▶ PLAY SOUND';
+                btn.classList.remove('active');
+              }
+            }
+          }, 3200);
+        }
+      }
+
+      function renderCards() {
+        const catalog = window.GAME_AUDIO_CATALOG || [];
+        const q = searchQuery.toLowerCase().trim();
+
+        const filtered = catalog.filter(item => {
+          if (activeCategory !== 'all' && item.category !== activeCategory) return false;
+          if (!q) return true;
+          return (
+            (item.title && item.title.toLowerCase().includes(q)) ||
+            (item.urdu && item.urdu.toLowerCase().includes(q)) ||
+            (item.english && item.english.toLowerCase().includes(q)) ||
+            (item.speaker && item.speaker.toLowerCase().includes(q)) ||
+            (item.context && item.context.toLowerCase().includes(q))
+          );
+        });
+
+        showingCount.textContent = `Displaying ${filtered.length} of ${catalog.length} audio tracks and dialogue lines`;
+        cardsGrid.innerHTML = '';
+
+        filtered.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'audio-card';
+          card.id = `card-${item.id}`;
+
+          const speakerClass = `speaker-${item.category}`;
+          const borderClass = `${item.category}-border`;
+
+          const defaultPan = (item.category === 'khaki') ? -0.85 : (item.category === 'babu') ? 0.85 : 0;
+
+          card.innerHTML = `
+            <div class="card-top">
+              <div class="card-title-group">
+                <div class="card-title">${item.title}</div>
+                <div class="card-meta">
+                  <span class="tag-speaker ${speakerClass}">${item.speaker}</span>
+                  <span class="tag-type">${item.type.toUpperCase()}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dialogue-box ${borderClass}">
+              <div class="urdu-text">${item.urdu || ''}</div>
+              <div class="english-text">${item.english || ''}</div>
+              <div class="context-note"><b>In-Game Trigger:</b> ${item.context}</div>
+            </div>
+
+            <div class="card-controls">
+              <div class="btn-row">
+                <button class="btn-play-sound" type="button" data-id="${item.id}">
+                  ▶ PLAY SOUND
+                </button>
+                <button class="btn-stop-sound" type="button" data-id="${item.id}">
+                  STOP
+                </button>
+                <button class="btn-loop" type="button" data-id="${item.id}" title="Toggle Continuous Loop">
+                  LOOP
+                </button>
+              </div>
+
+              <div class="sliders-row">
+                <div class="slider-item">
+                  <span>PAN</span>
+                  <input type="range" class="card-pan" min="-100" max="100" value="${defaultPan * 100}">
+                  <span class="pan-val" style="min-width:38px">${defaultPan < 0 ? 'LEFT' : defaultPan > 0 ? 'RIGHT' : 'MID'}</span>
+                </div>
+                <div class="slider-item">
+                  <span>VOL</span>
+                  <input type="range" class="card-vol" min="10" max="150" value="100">
+                  <span class="vol-val" style="min-width:28px">100%</span>
+                </div>
+              </div>
+            </div>
+          `;
+
+          // Hook card events
+          const btnPlay = card.querySelector('.btn-play-sound');
+          const btnStop = card.querySelector('.btn-stop-sound');
+          const btnLoop = card.querySelector('.btn-loop');
+          const panSlider = card.querySelector('.card-pan');
+          const panVal = card.querySelector('.pan-val');
+          const volSlider = card.querySelector('.card-vol');
+          const volVal = card.querySelector('.vol-val');
+
+          let isLooping = false;
+
+          panSlider.addEventListener('input', () => {
+            const v = parseInt(panSlider.value, 10);
+            panVal.textContent = v < -20 ? 'LEFT' : v > 20 ? 'RIGHT' : 'MID';
+          });
+
+          volSlider.addEventListener('input', () => {
+            volVal.textContent = `${volSlider.value}%`;
+          });
+
+          btnLoop.addEventListener('click', () => {
+            isLooping = !isLooping;
+            btnLoop.classList.toggle('active', isLooping);
+          });
+
+          btnPlay.addEventListener('click', () => {
+            const pan = parseInt(panSlider.value, 10) / 100;
+            const vol = parseInt(volSlider.value, 10) / 100;
+            btnPlay.innerHTML = 'PLAYING...';
+            btnPlay.classList.add('active');
+            playItemSound(item, pan, vol, isLooping);
+          });
+
+          btnStop.addEventListener('click', () => {
+            stopItemSound(item);
+          });
+
+          cardsGrid.appendChild(card);
+        });
+      }
+
+      // Toolbar Category Buttons
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          activeCategory = pill.getAttribute('data-cat');
+          renderCards();
+        });
+      });
+
+      // Search Filter
+      searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value;
+        renderCards();
+      });
+
+      // Master Volume Slider
+      masterVolSlider.addEventListener('input', () => {
+        const v = parseInt(masterVolSlider.value, 10) / 100;
+        masterVolVal.textContent = `${masterVolSlider.value}%`;
+        if (window.GameAudio) window.GameAudio.setVolume(v);
+      });
+
+      // Stop All Button
+      btnStopAll.addEventListener('click', () => {
+        if (!window.GameAudio) return;
+        window.GameAudio.stopAmbience();
+        window.GameAudio.stopPhoneGuy();
+        window.GameAudio.stopScannerLoop();
+        window.GameAudio.stopEmergencyAlarm();
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+        Object.keys(activeLoops).forEach(k => {
+          clearInterval(activeLoops[k]);
+          delete activeLoops[k];
+        });
+        Object.keys(activeSources).forEach(k => {
+          try {
+            if (activeSources[k].stop) activeSources[k].stop();
+            if (activeSources[k].pause) activeSources[k].pause();
+          } catch (_) {}
+          delete activeSources[k];
+        });
+
+        document.querySelectorAll('.audio-card').forEach(c => {
+          c.classList.remove('playing');
+          const b = c.querySelector('.btn-play-sound');
+          if (b) {
+            b.innerHTML = '▶ PLAY SOUND';
+            b.classList.remove('active');
+          }
+        });
+      });
+
+      // Initialize
+      window.addEventListener('load', () => {
+        if (window.GameAudio) {
+          window.GameAudio.init();
+          engineStatus.textContent = 'ONLINE (WebAudio 44.1kHz)';
+          engineStatus.style.color = '#4ade80';
+          setupVisualizer();
+        }
+        updateCategoryCounts();
+        renderCards();
+      });
+
+      // In case DOM was already ready
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        if (window.GameAudio) {
+          window.GameAudio.init();
+          engineStatus.textContent = 'ONLINE (WebAudio 44.1kHz)';
+          engineStatus.style.color = '#4ade80';
+          setupVisualizer();
+        }
+        updateCategoryCounts();
+        renderCards();
+      }
+    })();
+  </script>
+</body>
+</html>
